@@ -18,4 +18,10 @@ router.get('/', (request, response) => {
 
 })
 
+router.get('/login', (request, response) => {
+
+    response.render('login')
+
+})
+
 server.listen(3000)
