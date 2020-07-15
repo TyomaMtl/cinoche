@@ -28,4 +28,10 @@ router.get('/login', (request, response) => {
 
 })
 
+router.get('/register', (request, response) => {
+
+    response.render('register')
+
+})
+
 server.listen(3000)
