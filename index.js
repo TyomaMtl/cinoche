@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const router = express.Router()
+const session = require('express-session')
 const bodyParser = require('body-parser')
 
 const app = express()
@@ -12,6 +13,13 @@ const sha1 = require('sha1')
 const { sequelize, User } = require('./database')
 
 app.set('view engine', 'ejs')
+
+app.use(session({
+    secret: 'weshalors',
+    cookie: {},
+    resave: true,
+    saveUninitialized: true
+}))
 
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -27,6 +35,24 @@ router.get('/', (request, response) => {
 router.get('/login', (request, response) => {
 
     response.render('login')
+
+})
+
+router.post('/login', (request, response) => {
+
+    User.findOne({ where: {
+        email: request.body.email,
+        password: sha1(request.body.password)
+    }}).then((user) => {
+
+        if (user) {
+            request.session.user_id = user.id
+            response.redirect('/')
+        } else {
+            response.send('Invalid credentials')
+        }
+
+    })
 
 })
 
