@@ -1,9 +1,13 @@
+require('dotenv').config()
+
 const express = require('express')
 const router = express.Router()
 const bodyParser = require('body-parser')
 
 const app = express()
 const server = require('http').createServer(app)
+
+const { sequelize, User } = require('./database')
 
 app.set('view engine', 'ejs')
 
