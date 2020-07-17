@@ -10,8 +10,7 @@ const server = require('http').createServer(app)
 
 const sha1 = require('sha1')
 
-const { sequelize, User } = require('./database')
-const { response } = require('express')
+const { User, Movie, Genre, Distributor } = require('./database')
 
 app.set('view engine', 'ejs')
 
@@ -91,10 +90,15 @@ router.post('/register', (request, response) => {
 
 router.get('/movies', (request, response) => {
     
-    
     if (request.session.id) {
         
-        response.render('movies')
+        Movie.findAll().then((movies) => {
+            response.render('movies', {
+                movies: movies
+            })
+        }).catch((error) => {
+            console.log('Error : ' + error)
+        })
 
     } else {
 

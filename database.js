@@ -25,5 +25,8 @@ sequelize.sync({
 
 module.exports = {
     sequelize: sequelize,
-    User: User
+    User: User,
+    Movie: Movie,
+    Genre: Genre,
+    Distributor: Distributor
 }
