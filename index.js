@@ -108,4 +108,24 @@ router.get('/movies', (request, response) => {
 
 })
 
+router.get('/distributors', (request, response) => {
+    
+    if (request.session.id) {
+        
+        Distributor.findAll().then((distributors) => {
+            response.render('distributors', {
+                distributors: distributors
+            })
+        }).catch((error) => {
+            console.log('Error : ' + error)
+        })
+
+    } else {
+
+        response.redirect('/login')
+    
+    }
+
+})
+
 server.listen(3000)
