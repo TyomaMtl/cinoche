@@ -7,6 +7,15 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 })
 
 const User = require('./models/User')(sequelize, DataTypes)
+const Movie = require('./models/Movie')(sequelize, DataTypes)
+const Genre = require('./models/Genre')(sequelize, DataTypes)
+const Distributor = require('./models/Distributor')(sequelize, DataTypes)
+
+Genre.hasMany(Movie)
+Movie.belongsTo(Genre)
+
+Distributor.hasMany(Movie)
+Movie.belongsTo(Distributor)
 
 sequelize.sync({
     alter: {
