@@ -128,4 +128,24 @@ router.get('/distributors', (request, response) => {
 
 })
 
+router.get('/genres', (request, response) => {
+    
+    if (request.session.id) {
+        
+        Genre.findAll().then((genres) => {
+            response.render('genres', {
+                genres: genres
+            })
+        }).catch((error) => {
+            console.log('Error : ' + error)
+        })
+
+    } else {
+
+        response.redirect('/login')
+    
+    }
+
+})
+
 server.listen(3000)
