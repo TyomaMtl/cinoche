@@ -11,6 +11,7 @@ const server = require('http').createServer(app)
 const sha1 = require('sha1')
 
 const { sequelize, User } = require('./database')
+const { response } = require('express')
 
 app.set('view engine', 'ejs')
 
@@ -47,7 +48,7 @@ router.post('/login', (request, response) => {
 
         if (user) {
             request.session.user_id = user.id
-            response.redirect('/')
+            response.redirect('/movies')
         } else {
             response.send('Invalid credentials')
         }
@@ -84,6 +85,21 @@ router.post('/register', (request, response) => {
         })
     } else {
         response.status(400).send('E-Mail already used')
+    }
+
+})
+
+router.get('/movies', (request, response) => {
+    
+    
+    if (request.session.id) {
+        
+        response.render('movies')
+
+    } else {
+
+        response.redirect('/login')
+    
     }
 
 })
