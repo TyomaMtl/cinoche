@@ -148,4 +148,20 @@ router.get('/genres', (request, response) => {
 
 })
 
+router.get('/movie/:id(\\d+)', (request, response) => {
+
+    let id = request.params.id
+
+    Movie.findOne({ where: {
+        id: id,
+    }}).then((movie) => {
+
+        response.render('movie', {
+            movie: movie
+        })
+
+    })
+
+})
+
 server.listen(3000)
